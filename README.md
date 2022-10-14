@@ -14,5 +14,4 @@
 ### Java : 1.8.0_321
 ### IDE : Eclipse IDE 
 ### 사용된 언어 : English, Korean(UTF-8), HTML, JSP, Javascript
-#
 ### url: https://github.com/Leedonghun12/INBOOK
