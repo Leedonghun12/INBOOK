@@ -4,7 +4,6 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
-
 import com.inbook.chatRoom.service.ChatRoomDeleteService;
 import com.inbook.chatRoom.service.ChatRoomListService;
 import com.inbook.chatRoom.service.ChatRoomUpdateService;
@@ -29,8 +28,6 @@ public class ChatRoomController implements Controller {
 	public void setChatRoomWriteService(ChatRoomWriteService chatRoomWriteService) {
 		this.chatRoomWriteService = chatRoomWriteService;
 	}
-	
-
 
 	public void setChatRoomUpdateService(ChatRoomUpdateService chatRoomUpdateService) {
 		this.chatRoomUpdateService = chatRoomUpdateService;
@@ -43,39 +40,20 @@ public class ChatRoomController implements Controller {
 	@Override
 	public String execute(HttpServletRequest request) throws Exception {
 
-		System.out.println("ChatRoomController.execute() - 채팅 처리하고 있다.");
+		System.out.println("ChatRoomController.execute() - 채팅방 처리하고 있다.");
 
 		String jsp = null;
 
-		// uri - /board/list.do - 처리 service 결정하는 - /list.do
 		String uri = request.getServletPath();
 		String serviceUri = uri.substring(uri.indexOf("/", 1));
 		System.out.println("ChatRoomController.execute().serviceUri - " + serviceUri);
 
 		switch (serviceUri) {
+		// 채팅방 리스트
 		case "/list.do":
 
-			// 페이지와 검색 정보 - 메시지 모드느 받은 메시지가 기본으로 선택된다.
-//			
-//			String noStr = request.getParameter("no");
-//			long no = Long.parseLong(noStr);
-//			
-	      	PageObject pageObject = PageObject.getInstance(request);
-//			
-	//		chatRoomPageObject chatRoomPageObject = new chatRoomPageObject();
-//			String strChatRoomPage = request.getParameter("chatRoomPage");
-//			if(strChatRoomPage != null) chatRoomPageObject.setPage(Long.parseLong(strChatRoomPage));
-//			
-//			chatRoomPageObject.setNo(no);
-//			
-//			@SuppressWarnings("unchecked")
-//			List<ChatRoomVO> list = (List<ChatRoomVO>) Execute.service(chatRoomListService, chatRoomPageObject);
-//			
-			// 메시지 사용자 데이터를 session에서 가져와서 채워 넣는다.
-			// pageObject.setAccepter(((LoginVO)
-			// request.getSession().getAttribute("login")).getId());
-			 
-	     // 	String id = (String)((LoginVO)request.getSession().getAttribute("login")).getId();
+			// Page 정보 받기
+			PageObject pageObject = PageObject.getInstance(request);
 			request.setAttribute("list", Execute.service(chatRoomListService, pageObject));
 			request.setAttribute("pageObject", pageObject);
 
@@ -90,84 +68,76 @@ public class ChatRoomController implements Controller {
 
 			break;
 
+		// 채팅방 글쓰기 처리
 		case "/chatRoomWrite.do":
+
+			// 넘어오는 데이터 받기
 			String title = request.getParameter("title");
-			String id = (String)((LoginVO)request.getSession().getAttribute("login")).getId();
+			String id = (String) ((LoginVO) request.getSession().getAttribute("login")).getId();
 			String strPerPageNum = request.getParameter("perPageNum");
-			
+
 			// 넘겨 받은 데이터를 vo에 생성해서 넣어준다.
 			ChatRoomVO vo = new ChatRoomVO();
-			
 			vo.setTitle(title);
 			vo.setId(id);
-	
+
 			// DB 등록
 			Execute.service(chatRoomWriteService, vo);
-			
+
 			// redirect: - url 이동, 없으면 jsp로 이동
 			jsp = "redirect:list.do?perPageNum=" + strPerPageNum;
 			break;
-			
-			
-		
 
 		case "/updateForm.do":
 
 			break;
 
+		// 채팅방 수정 처리
 		case "/chatRoomUpdate.do":
-			
+
+			// 넘어오는 데이터 받기
 			String strCno = request.getParameter("cno");
 			Long cno = Long.parseLong(strCno);
 			title = request.getParameter("title");
-		
-		
 
+			// 넘겨 받은 데이터를 vo에 생성해서 넣어준다.
 			vo = new ChatRoomVO();
 			vo.setCno(cno);
 			vo.setTitle(title);
-			
-			
-			// DB 등록 
+
+			// DB 등록
 			Execute.service(chatRoomUpdateService, vo);
-			
-			jsp = "redirect:list.do" ;
 
-			
-			
+			// 수정 처리 후 이동할 페이지 정보를 "redirect:"를 붙여서 넣어 준다.
+			jsp = "redirect:list.do";
+
 			break;
-			
 
-			
-
+		// 채팅방 삭제 처리
 		case "/chatRoomDelete.do":
-			
+
+			// 넘어오는 데이터 받기
 			strCno = request.getParameter("cno");
 			cno = Long.parseLong(strCno);
-			id = (String)((LoginVO)request.getSession().getAttribute("login")).getId();
-			
-			// jsp(Controller) - CommentUpdateService - CommentDAO
+			id = (String) ((LoginVO) request.getSession().getAttribute("login")).getId();
+
+			// 넘겨 받은 데이터를 vo에 생성해서 넣어준다.
 			vo = new ChatRoomVO();
 			vo.setCno(cno);
 			vo.setId(id);
-	
-			
-			// DB 등록 - CommentUpdateService - CommentDAO
+
+			// DB 등록
 			Execute.service(chatRoomDeleteService, vo);
-			
-			jsp = "redirect:list.do?no =" + request.getParameter("cno")
-			+ "&page=" + request.getParameter("page")
-			+ "&perPageNum=" + request.getParameter("perPageNum")
-			+ "&key=" + request.getParameter("key")
-			+ "&word=" + request.getParameter("word")
-			+ "&chatRoomPage=1";
-		
-			
+
+			jsp = "redirect:list.do?no =" + request.getParameter("cno") + "&page=" + request.getParameter("page")
+					+ "&perPageNum=" + request.getParameter("perPageNum") + "&key=" + request.getParameter("key")
+					+ "&word=" + request.getParameter("word") + "&chatRoomPage=1";
+
 			break;
 
 		default:
 			throw new Exception("잘못된 페이지를 요청하셨습니다.");
-			
+
 		}
 
 		return jsp;

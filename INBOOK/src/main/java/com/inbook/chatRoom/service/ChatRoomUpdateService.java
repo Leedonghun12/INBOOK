@@ -7,7 +7,7 @@ import com.inbook.main.Service;
 public class ChatRoomUpdateService implements Service {
 
 	private ChatRoomDAO dao;
-	
+
 	public void setDao(ChatRoomDAO dao) {
 		this.dao = dao;
 	}
@@ -19,5 +19,5 @@ public class ChatRoomUpdateService implements Service {
 		// 메서드를 호출한다.
 		return dao.update(vo);
 	}
-	
+
 }

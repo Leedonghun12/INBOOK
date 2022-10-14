@@ -7,11 +7,10 @@ import com.inbook.chatRoom.vo.ChatRoomVO;
 import com.inbook.main.Service;
 import com.webjjang.util.PageObject;
 
-
 public class ChatRoomListService implements Service {
-	
+
 	private ChatRoomDAO dao;
-	
+
 	public void setDao(ChatRoomDAO dao) {
 		this.dao = dao;
 	}
@@ -20,13 +19,12 @@ public class ChatRoomListService implements Service {
 	public List<ChatRoomVO> service(Object obj) throws Exception {
 		// TODO Auto-generated method stub
 		PageObject pageObject = (PageObject) obj;
-		
-		// pageObject.setTotalRow() 호출을 하지 않으면 데이터를 못 가져온다. startRow, endRow = 0을 세팅되기 때문에
+
+		// pageObject.setTotalRow() 호출을 하지 않으면 데이터를 못 가져온다. startRow, endRow = 0을 세팅되기 때문이다.
 		pageObject.setTotalRow(dao.getTotalRow(pageObject));
-		
+
 		return dao.list(pageObject);
-		
-	
+
 	}
 
 }

@@ -8,22 +8,20 @@ import com.inbook.main.Service;
 import com.webjjang.util.PageObject;
 
 public class ChatMaxNoService implements Service {
-	
+
 	private ChatDAO dao;
-	
+
 	public void setDao(ChatDAO dao) {
 		this.dao = dao;
 	}
 
-	@Override 
+	@Override
 	public Long service(Object obj) throws Exception {
 		// TODO Auto-generated method stub
 		Long cno = (Long) obj;
-			
-		
+
 		return dao.getMaxNo(cno);
-		
-	
+
 	}
 
 }
