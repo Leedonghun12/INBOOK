@@ -1,5 +1,5 @@
 # INBOOK(팀 프로젝트)
-
+[INBOOK.pptx](https://github.com/Leedonghun12/INBOOK/files/9795150/INBOOK.pptx)
 ## 제작자 : 이동훈 외 팀원 5명
 ## 이메일 : gkod@naver.com
 ## 주제 : SNS 커뮤니티 
@@ -15,4 +15,4 @@
 ### IDE : Eclipse IDE 
 ### 사용된 언어 : English, Korean(UTF-8), HTML, JSP, Javascript
 ### url: https://github.com/Leedonghun12/INBOOK
-[INBOOK.pptx](https://github.com/Leedonghun12/INBOOK/files/9795150/INBOOK.pptx)
+
