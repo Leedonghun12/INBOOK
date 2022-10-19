@@ -13,6 +13,6 @@
 ### DB : Oracle 11G XE
 ### Java : 1.8.0_321
 ### IDE : Eclipse IDE 
-### 사용된 언어 : English, Korean(UTF-8), HTML, JSP, Javascript
+### 사용된 언어 : English, Korean(UTF-8), HTML, JSP, Java
 ### url: https://github.com/Leedonghun12/INBOOK
 
